@@ -30,3 +30,20 @@ export const loginSchema = Joi.object({
     "any.required": "Trường password là bắt buộc",
   }),
 });
+
+export const facebookAuthSchema = Joi.object({
+  code: Joi.string().required().messages({
+    "string.empty": "Code không được để trống",
+    "any.required": "Trường code là bắt buộc",
+  }),
+  redirectUri: Joi.string().uri().optional().messages({
+    "string.uri": "redirectUri phải là một URL hợp lệ",
+  }),
+});
+
+export const subscribeFacebookPagesSchema = Joi.object({
+  pageIds: Joi.array().items(Joi.string().required()).required().messages({
+    "array.base": "pageIds phải là một danh sách",
+    "any.required": "Trường pageIds là bắt buộc",
+  }),
+});

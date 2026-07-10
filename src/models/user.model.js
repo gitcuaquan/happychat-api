@@ -37,14 +37,22 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    facebookId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+    facebookAccessToken: {
+      type: String,
+    },
   },
   { timestamps: true },
 );
 
 // Mã hóa (hash) password trước khi lưu vào database
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
   if (!this.isModified("password")) {
-    next();
+    return;
   }
 
   const salt = await bcrypt.genSalt(10);
